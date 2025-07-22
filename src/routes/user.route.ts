@@ -125,7 +125,7 @@ const userRoutes = new Elysia()
                 ipAddress: t.Union([t.String({ format: "ipv4" }), t.Null()])
             })
         })
-            .delete("/users/remove/:id", async ({ status, dbName, collectionName, params: { id } }) => {
+            .delete("/users/delete/:id", async ({ status, dbName, collectionName, params: { id } }) => {
                 try {
                     await client.connect();
                     const db: Db = client.db(dbName);

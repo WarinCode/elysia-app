@@ -17,7 +17,7 @@ describe("ทดสอบเส้น API Endpoints", (): void => {
 
     test("GET /api/users", async (): Promise<void> => {
         const { data } = await app.api.users.get();
-        expect(data).toBeArrayOfSize(1001);
+        expect(data).toBeArrayOfSize(1000);
     });
 
     test("GET /api/users/:id", async (): Promise<void> => {
@@ -54,33 +54,33 @@ describe("ทดสอบเส้น API Endpoints", (): void => {
         expect(data?.modifiedCount).toBe(1);
     });
 
-    test("DELETE /api/users/delete/:id", async (): Promise<void> => {
-        const { data } = await app.api.users.delete({ id: 1002 }).delete();
+    test("DELETE /api/users/remove/:id", async (): Promise<void> => {
+        const { data } = await app.api.users.remove({ id: 1000 }).delete();
         expect(data?.deletedCount).toBe(1);
     });
 
     test("PATCH /api/users/update/:id/firstname", async (): Promise<void> => {
-        const { data } = await app.api.users.update({ id: 1001 }).firstname.patch({ firstname: "John" });
+        const { data } = await app.api.users.update({ id: 1000 }).firstname.patch({ firstname: "John" });
         expect(data?.modifiedCount).toBe(1);
     });
 
     test("PATCH /api/users/update/:id/lastname", async (): Promise<void> => {
-        const { data } = await app.api.users.update({ id: 1001 }).lastname.patch({ lastname: "Doe" });
+        const { data } = await app.api.users.update({ id: 1000 }).lastname.patch({ lastname: "Doe" });
         expect(data?.modifiedCount).toBe(1);
     });
 
     test("PATCH /api/users/update/:id/email", async (): Promise<void> => {
-        const { data } = await app.api.users.update({ id: 1001 }).email.patch({ email: "johndoe@gmail.com" });
+        const { data } = await app.api.users.update({ id: 1000 }).email.patch({ email: "johndoe@gmail.com" });
         expect(data?.modifiedCount).toBe(1);
     });
 
     test("PATCH /api/users/update/:id/gender", async (): Promise<void> => {
-        const { data } = await app.api.users.update({ id: 1001 }).gender.patch({ gender: "Male" });
+        const { data } = await app.api.users.update({ id: 1000 }).gender.patch({ gender: "Male" });
         expect(data?.modifiedCount).toBe(1);
     });
 
     test("PATCH /api/users/update/:id/ip", async (): Promise<void> => {
-        const { data } = await app.api.users.update({ id: 1001 }).ip.patch({ ipAddress: null });
+        const { data } = await app.api.users.update({ id: 1000 }).ip.patch({ ipAddress: null });
         expect(data?.modifiedCount).toBe(1);
     });
 });

@@ -54,8 +54,8 @@ describe("ทดสอบเส้น API Endpoints", (): void => {
         expect(data?.modifiedCount).toBe(1);
     });
 
-    test("DELETE /api/users/delete/:id", async (): Promise<void> => {
-        const { data } = await app.api.users.delete({ id: 1001 }).delete();
+    test("DELETE /api/users/remove/:id", async (): Promise<void> => {
+        const { data } = await app.api.users.remove({ id: 1001 }).delete();
         expect(data?.deletedCount).toBe(1);
     });
 

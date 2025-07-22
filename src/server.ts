@@ -1,44 +1,16 @@
-import { Elysia, t } from "elysia";
-import { configDotenv } from "dotenv";
-import client from "./connection/client";
-
-configDotenv();
-const { PORT } = <Environment>Bun.env;
+import { Elysia } from "elysia";
+import { cors } from "@elysiajs/cors";
+import { swagger } from "@elysiajs/swagger";
+import { getEnv } from "./utils";
+import userRoutes from "./routes/user.route";
 
 const app = new Elysia()
+  .use(cors({ origin: "*", methods: "*" }))
+  .use(swagger())
   .get("/", () => "Hello World!")
-  .group("/api", (app) => {
-    return app.get("/users", async ({ status }) => {
-      try {
-        await client.connect();
-        const db = client.db("db_34847");
-        const collection = db.collection<User>("users");
-        const users = await collection.find({}).toArray();
-        return users;
-      } catch (err: unknown) {
-        return status(500);
-      } finally {
-        await client.close();
-      }
-    }).get("/users/:id", async ({ status, params: { id } }) => {
-      try {
-        await client.connect();
-        const db = client.db("db_34847");
-        const collection = db.collection<User>("users");
-        const user = await collection.findOne({ id });
-        return user;
-      } catch (err: unknown) {
-        return status(500);
-      } finally {
-        await client.close();
-      }
-    }, {
-      params: t.Object({
-        id: t.Number()
-      })
-    })
-  })
-  .listen(PORT);
+  .use(userRoutes)
+  .all("*", ({ status }) => status(400, "Not Found!"))
+  .listen(getEnv("PORT"));
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`

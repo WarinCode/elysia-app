@@ -25,10 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.development
 
 # vercel
 .vercel
@@ -41,5 +38,5 @@ yarn-error.log*
 package-lock.json
 **/*.bun
 
-.env.*
 users.json
+server.exe

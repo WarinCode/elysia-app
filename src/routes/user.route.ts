@@ -141,6 +141,101 @@ const userRoutes = new Elysia()
                 params: t.Object({
                     id: t.Number({ minimum: 1, maximum: 10000 })
                 })
+            }).patch("/users/update/:id/firstname", async ({ status, collectionName, dbName, params: { id }, body: { firstname } }) => {
+                try {
+                    await client.connect();
+                    const db: Db = client.db(dbName);
+                    const collection: Collection<User> = db.collection<User>(collectionName);
+                    const result: UpdateResult<User> = await collection.updateOne({ id }, { $set: { firstname } });
+                    return status(200, result);
+                } catch (err: unknown) {
+                    return status(500);
+                }
+            }, {
+                params: t.Object({
+                    id: t.Number({ minimum: 1, maximum: 10000 })
+                }),
+                body: t.Object({
+                    firstname: t.String({ minLength: 3, maxLength: 20 })
+                })
+            }).patch("/users/update/:id/lastname", async ({ status, collectionName, dbName, params: { id }, body: { lastname } }) => {
+                try {
+                    await client.connect();
+                    const db: Db = client.db(dbName);
+                    const collection: Collection<User> = db.collection<User>(collectionName);
+                    const result: UpdateResult<User> = await collection.updateOne({ id }, { $set: { lastname } });
+                    return status(200, result);
+                } catch (err: unknown) {
+                    return status(500);
+                }
+            }, {
+                params: t.Object({
+                    id: t.Number({ minimum: 1, maximum: 10000 })
+                }),
+                body: t.Object({
+                    lastname: t.String({ minLength: 3, maxLength: 20 })
+                })
+            }).patch("/users/update/:id/email", async ({ status, collectionName, dbName, params: { id }, body: { email } }) => {
+                try {
+                    await client.connect();
+                    const db: Db = client.db(dbName);
+                    const collection: Collection<User> = db.collection<User>(collectionName);
+                    const result: UpdateResult<User> = await collection.updateOne({ id }, { $set: { email } });
+                    return status(200, result);
+                } catch (err: unknown) {
+                    return status(500);
+                }
+            }, {
+                params: t.Object({
+                    id: t.Number({ minimum: 1, maximum: 10000 })
+                }),
+                body: t.Object({
+                    email: t.String({ minLength: 5, maxLength: 50, format: "email" })
+                })
+            }).patch("/users/update/:id/gender", async ({ status, collectionName, dbName, params: { id }, body: { gender } }) => {
+                try {
+                    await client.connect();
+                    const db: Db = client.db(dbName);
+                    const collection: Collection<User> = db.collection<User>(collectionName);
+                    const result: UpdateResult<User> = await collection.updateOne({ id }, { $set: { gender } });
+                    return status(200, result);
+                } catch (err: unknown) {
+                    return status(500);
+                }
+            }, {
+                params: t.Object({
+                    id: t.Number({ minimum: 1, maximum: 10000 })
+                }),
+                body: t.Object({
+                    gender: t.Union([
+                        t.Null(),
+                        t.Literal('Male'),
+                        t.Literal("Female"),
+                        t.Literal("Genderfluid"),
+                        t.Literal("Non-binary"),
+                        t.Literal("Genderqueer"),
+                        t.Literal("Bigender"),
+                        t.Literal("Polygender"),
+                        t.Literal("Agender")
+                    ])
+                })
+            }).patch("/users/update/:id/ip", async ({ status, collectionName, dbName, params: { id }, body: { ipAddress } }) => {
+                try {
+                    await client.connect();
+                    const db: Db = client.db(dbName);
+                    const collection: Collection<User> = db.collection<User>(collectionName);
+                    const result: UpdateResult<User> = await collection.updateOne({ id }, { $set: { ipAddress } });
+                    return status(200, result);
+                } catch (err: unknown) {
+                    return status(500);
+                }
+            }, {
+                params: t.Object({
+                    id: t.Number({ minimum: 1, maximum: 10000 })
+                }),
+                body: t.Object({
+                    ipAddress: t.Union([t.String({ format: "ipv4" }), t.Null()])
+                })
             })
     })
 
